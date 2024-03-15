@@ -1,5 +1,5 @@
 import { createTemplateAction } from '@backstage/plugin-scaffolder-node';
-import axios from 'axios';
+/// import axios from 'axios';
 import { Config } from '@backstage/config';
 import { encryptSecret } from './encryption';
 import {randomBytes} from 'crypto';
@@ -24,10 +24,10 @@ export function triggerJenkinsJobAction(config: Config){
     secret: { [key: string]: string; };
     jenkinsInstructions?: string;
   }>({
-    id: 'tibco:jenkins-trigger-ear-build',
+    id: 'tibco:jenkins-trigger-job',
     schema: {
       input: {
-        required: ['repoUrl', 'job', 'secret' ],
+        required: ['repoUrl', 'job' ],
         type: 'object',
         properties: {
           repoUrl: {
@@ -82,7 +82,7 @@ export function triggerJenkinsJobAction(config: Config){
         '-------------------------------------------------------------------------------------------',
       );
       ctx.logger.info(
-        '------------------- STARTING JENKINS JOB TO BUILD THE EAR FILE  ---------------------------',
+        '----------------------------- XXXXX   --------------------------------------',
       );
       ctx.logger.info(
         '-------------------------------------------------------------------------------------------',
@@ -119,14 +119,15 @@ export function triggerJenkinsJobAction(config: Config){
         '-------------------------------------------------------------------------------------------',
       );
 
-      const jResponse = await axios.get(jenkinsCallURl, {
-        auth: {
-          username: jenkinsUser,
-          password: jenkinsApiKey,
-        },
-      });
+      ctx.logger.info(`Calling: ${jenkinsCallURl}`);
+      // const jResponse = await axios.get(jenkinsCallURl, {
+      //   auth: {
+      //     username: jenkinsUser,
+      //     password: jenkinsApiKey,
+      //   },
+      // });
       const jobLink = `${jenkinsBaseUrl}/job/${jenkinsJob}/`;
-      ctx.logger.info(`------ Job Started: ${jResponse.statusText}`);
+      // ctx.logger.info(`------ Job Started: ${jResponse.statusText}`);
       ctx.logger.info(`------    Job Link: ${jobLink}`);
       ctx.logger.info(
         '------------------------------------------------------------------------------------------',

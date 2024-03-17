@@ -1,5 +1,5 @@
 import { createTemplateAction } from '@backstage/plugin-scaffolder-node';
-/// import axios from 'axios';
+import axios from 'axios';
 import { Config } from '@backstage/config';
 import { encryptSecret } from './encryption';
 import {randomBytes} from 'crypto';
@@ -27,7 +27,7 @@ export function triggerJenkinsJobAction(config: Config){
     id: 'tibco:jenkins-trigger-job',
     schema: {
       input: {
-        required: ['repoUrl', 'job' ],
+        required: [ 'job' ],
         type: 'object',
         properties: {
           repoUrl: {
@@ -78,19 +78,13 @@ export function triggerJenkinsJobAction(config: Config){
       const jenkinsSecretObj = ctx.input.secret;
       let jenkinsInstructions = ctx.input.jenkinsInstructions || '';
 
-      ctx.logger.info(
-        '-------------------------------------------------------------------------------------------',
-      );
-      ctx.logger.info(
-        '----------------------------- XXXXX   --------------------------------------',
-      );
-      ctx.logger.info(
-        '-------------------------------------------------------------------------------------------',
-      );
+      ctx.logger.info("-------------------------------------------------------------------------------------------")
+      ctx.logger.info("-------------------------------- STARTING JENKINS JOB   -----------------------------------")
+      ctx.logger.info("-------------------------------------------------------------------------------------------")
       ctx.logger.info(`------ Jenkins BASE URL: ${jenkinsBaseUrl}`);
       ctx.logger.info(`------ Jenkins Username: ${jenkinsUser}`);
       ctx.logger.info(`------      Jenkins Job: ${jenkinsJob}`);
-      ctx.logger.info(`------     Repo Name: ${repoUrl.repo}`);
+      ctx.logger.info(`------     Repo Name: ${repoUrl?.repo}`);
       ctx.logger.info(`---Jenkins Instructions: ${jenkinsInstructions}`);
       ctx.logger.info(
         '-------------------------------------------------------------------------------------------',
@@ -110,7 +104,8 @@ export function triggerJenkinsJobAction(config: Config){
       }
       ctx.logger.info(`---Jenkins Instructions: ${  jenkinsInstructions}`);
 
-      const jenkinsCallURl = `${jenkinsBaseUrl}job/${jenkinsJob}/buildWithParameters?token=${jenkinsJobToken}&repo_host=${repoUrl.host}&repo_owner=${repoUrl.owner}&repo_name=${repoUrl.repo}${jenkinsInstructions}`;
+      // const jenkinsCallURl = `${jenkinsBaseUrl}job/${jenkinsJob}/buildWithParameters?token=${jenkinsJobToken}&repo_host=${repoUrl.host}&repo_owner=${repoUrl.owner}&repo_name=${repoUrl.repo}${jenkinsInstructions}`;
+      const jenkinsCallURl = `${jenkinsBaseUrl}job/${jenkinsJob}/buildWithParameters?token=${jenkinsJobToken}${jenkinsInstructions}`;
       ctx.logger.info(
         '-------------------------------------------------------------------------------------------',
       );
@@ -120,14 +115,14 @@ export function triggerJenkinsJobAction(config: Config){
       );
 
       ctx.logger.info(`Calling: ${jenkinsCallURl}`);
-      // const jResponse = await axios.get(jenkinsCallURl, {
-      //   auth: {
-      //     username: jenkinsUser,
-      //     password: jenkinsApiKey,
-      //   },
-      // });
+      const jResponse = await axios.get(jenkinsCallURl, {
+        auth: {
+          username: jenkinsUser,
+          password: jenkinsApiKey,
+        },
+      });
       const jobLink = `${jenkinsBaseUrl}/job/${jenkinsJob}/`;
-      // ctx.logger.info(`------ Job Started: ${jResponse.statusText}`);
+      ctx.logger.info(`------ Job Started: ${jResponse.statusText}`);
       ctx.logger.info(`------    Job Link: ${jobLink}`);
       ctx.logger.info(
         '------------------------------------------------------------------------------------------',

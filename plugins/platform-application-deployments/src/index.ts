@@ -1,1 +1,5 @@
-export { platformApplicationDeploymentsPlugin, PlatformApplicationDeploymentsPage } from './plugin';
+export {
+  platformApplicationDeploymentsPlugin,
+  PlatformApplicationDeploymentsCard,
+  PlatformApplicationDeploymentsPage,
+} from './plugin';

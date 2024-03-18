@@ -1,25 +1,25 @@
 import {
-    createRouter,
-    DefaultJenkinsInfoProvider,
+  createRouter,
+  DefaultJenkinsInfoProvider,
 } from '@backstage/plugin-jenkins-backend';
 import { CatalogClient } from '@backstage/catalog-client';
 import { Router } from 'express';
 import { PluginEnvironment } from '../types';
 
 export default async function createPlugin(
-    env: PluginEnvironment,
+  env: PluginEnvironment,
 ): Promise<Router> {
-    const catalog = new CatalogClient({
-        discoveryApi: env.discovery,
-    });
+  const catalog = new CatalogClient({
+    discoveryApi: env.discovery,
+  });
 
-    return await createRouter({
-        logger: env.logger,
-        jenkinsInfoProvider: DefaultJenkinsInfoProvider.fromConfig({
-            config: env.config,
-            // @ts-ignore
-            catalog,
-        }),
-        permissions: env.permissions,
-    });
+  return await createRouter({
+    logger: env.logger,
+    jenkinsInfoProvider: DefaultJenkinsInfoProvider.fromConfig({
+      config: env.config,
+      // @ts-ignore
+      catalog,
+    }),
+    permissions: env.permissions,
+  });
 }

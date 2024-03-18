@@ -212,7 +212,10 @@ const routes = (
       {settingsPage}
     </Route>
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
-    <Route path="/platform-application-deployments" element={<PlatformApplicationDeploymentsPage />} />
+    <Route
+      path="/platform-application-deployments"
+      element={<PlatformApplicationDeploymentsPage />}
+    />
   </FlatRoutes>
 );
 export default app.createRoot(

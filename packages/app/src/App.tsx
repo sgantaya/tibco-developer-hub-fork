@@ -64,6 +64,7 @@ import {
   catalogImportPlugin,
 } from './components/catalog-import/CatalogImportPage';
 import { Button } from '@material-ui/core';
+import { PlatformApplicationDeploymentsPage } from '@internal/plugin-platform-application-deployments';
 
 export const generateProviders = (providerConfig: string[]): any[] => {
   const providers: any[] = [];
@@ -211,6 +212,7 @@ const routes = (
       {settingsPage}
     </Route>
     <Route path="/catalog-graph" element={<CatalogGraphPage />} />
+    <Route path="/platform-application-deployments" element={<PlatformApplicationDeploymentsPage />} />
   </FlatRoutes>
 );
 export default app.createRoot(

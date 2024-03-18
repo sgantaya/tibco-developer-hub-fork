@@ -4,6 +4,15 @@ import { Config } from '@backstage/config';
 import { encryptSecret } from './encryption';
 import {randomBytes} from 'crypto';
 
+type RepoUrl = {
+  host: string;
+  owner: string;
+  repo: string
+}
+function generateJenkinsCallURl(jenkinsBaseUrl: string, jenkinsJob: string, jenkinsJobToken: string, repoUrl: RepoUrl, jenkinsInstructions: string): string{
+  return `${jenkinsBaseUrl}/job/${jenkinsJob}/buildWithParameters?token=${jenkinsJobToken}&repo_host=${repoUrl.host}&repo_owner=${repoUrl.owner}&repo_name=${repoUrl.repo}${jenkinsInstructions}`;
+}
+
 export function triggerJenkinsJobAction(config: Config){
   // Get from config
   const jenkinsBaseUrl = config.getString('jenkins.baseUrl');
@@ -18,7 +27,7 @@ export function triggerJenkinsJobAction(config: Config){
   }
 
   return createTemplateAction<{
-    repoUrl: {host: string; owner: string; repo: string};
+    repoUrl: RepoUrl;
     job: string;
     jobAuthToken?: string;
     secret?: { [key: string]: string; };
@@ -110,7 +119,8 @@ export function triggerJenkinsJobAction(config: Config){
       }
       ctx.logger.info(`---Jenkins Instructions: ${  jenkinsInstructions}`);
 
-      const jenkinsCallURl = `${jenkinsBaseUrl}/job/${jenkinsJob}/buildWithParameters?token=${jenkinsJobToken}&repo_host=${repoUrl.host}&repo_owner=${repoUrl.owner}&repo_name=${repoUrl.repo}${jenkinsInstructions}`;
+      const jenkinsCallURl = generateJenkinsCallURl(jenkinsBaseUrl, jenkinsJob, jenkinsJobToken, repoUrl, jenkinsInstructions);
+
       ctx.logger.info(
         '-------------------------------------------------------------------------------------------',
       );

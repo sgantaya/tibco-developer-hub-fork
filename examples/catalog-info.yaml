@@ -1,0 +1,32 @@
+apiVersion: backstage.io/v1alpha1
+kind: Component
+metadata:
+  name: test-comp
+  description: test des
+  links:
+    - title: TIBCO Cloud Home
+      url: https://cloud.tibco.com/
+    - title: Documentation
+      url: https://eu.integration.cloud.tibco.com/docs/index.html
+    - title: TIBCO Cloud Integration
+      url: https://eu.integration.cloud.tibco.com/applications
+  annotations:
+    backstage.io/techdocs-ref: dir:.
+    jenkins.io/job-full-name: Build_BWCE_EAR_Maven_Secret
+  tibcoPlatformApps:
+    - appType: BWCE
+      appName: BWCE-app-01
+      dataPlaneName: Sagar-DP
+      dpId: cmsakrsicqg4cgd4ock0
+      capabilityInstanceId: cnrsoe1mmkeg3d5rt05g
+      appId: cnrspo5chbr3r06cq9eg
+    - appType: FLOGO
+      appName: FLOGO-app-01
+      dataPlaneName: FLOGOQA
+      dpId: cnptggsolrk2n9sq2m2g
+      capabilityInstanceId: cnptl0solrk2n9sq2m6g
+      appId: cnptn9gtp5pat4l41d90
+spec:
+  type: service
+  lifecycle: development
+  owner: test

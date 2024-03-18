@@ -1,3 +1,4 @@
 
-*                           @backstage/maintainers
-/plugins/jenkins-app-deploy @org/tibco
+*                                         @backstage/maintainers
+/plugins/jenkins-app-deploy               @org/tibco
+/plugins/platform-application-deployments @org/tibco

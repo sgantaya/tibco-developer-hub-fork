@@ -6,11 +6,11 @@ This document describes an example and the steps to run a template (bwce) which 
 
 ## Create a template
 
-In the 'template' directory, we have placed an example bwce template, which has 2 secrets as 'db_pass' and 'app_pass' and the template also uses the custom jenkins action 'tibco:jenkins-trigger-ear-build'.
+In the 'template' directory, we have placed an example bwce template, which has 2 secrets as 'db_pass' and 'app_pass' and the template also uses the custom jenkins action 'tibco:trigger-jenkins-job'.
 
 There is a sample bwce project template exists inside the 'template' directory named as 'test-secret' which is used in 'fetch:template' step of the template'.
 
-In this 'test-secret' folder, in the below files, in place of the secret we have added the texts as @@SECRET1@@ and @@SECRET2@@, which will be replaced by the input values 'db_pass' and 'app_pass', entered by user while running the template, in 'tibco:jenkins-trigger-ear-build' action while deploying the application.
+In this 'test-secret' folder, in the below files, in place of the secret we have added the texts as @@SECRET1@@ and @@SECRET2@@, which will be replaced by the input values 'db_pass' and 'app_pass', entered by user while running the template, in 'tibco:trigger-jenkins-job' action while deploying the application.
 
 Files:
 
@@ -18,11 +18,11 @@ Files:
 
 /test-secret/TestSecret.module/META-INF/default.substvar
 
-We have passed secrets as an object in the 'tibco:jenkins-trigger-ear-build' action, ex: SECRET1 and SECRET2
+We have passed secrets as an object in the 'tibco:trigger-jenkins-job' action, ex: SECRET1 and SECRET2
 
 We can crate our own template or modify the above template as per the requirement.
 
-## Install custom jenkins action (tibco:jenkins-trigger-ear-build)
+## Install custom jenkins action (tibco:trigger-jenkins-job)
 
 We have exported the custom jenkins action named as 'jenkins-app-deploy-backend', as a plugin which is inside the 'plugins' folder of the root of the project.
 
@@ -36,6 +36,8 @@ Go through the readme file inside the plugin to add the custom action to develop
 
 [Install node js (Tested with Version 18.17.0)](https://nodejs.org/en/download)
 
+[Install Java (Tested with Version 20)](https://nodejs.org/en/download)
+
 [Install maven (Tested with Version 3.9.6)](https://maven.apache.org/install.html)
 
 [Install TIBCO Business Studio for BusinessWorks (Tested with Version 2.9.1)](http://reldist.na.tibco.com/package/bwce/2.9.1/V52.3.2-GA)
@@ -46,7 +48,7 @@ Go to http://localhost:8080/manage/configure and add the below Environment varia
 
 Environment variables:
 BW_OBFUSCATE_FOLDER : Path to the bin folder where bwce studo has been installed ex: /Users/sgantayat/tibco-home/bwce/bwce/2.9/bin
-PATH: Add path of node js and mavel ex: $PATH:/Users/sgantayat/.nvm/versions/node/v18.17.0/bin:/usr/local/bin
+PATH: Add path of node js and maven ex: $PATH:/Users/sgantayat/.nvm/versions/node/v18.17.0/bin:/usr/local/bin
 
 ![img.png](readme_images/img.png)
 
@@ -86,7 +88,7 @@ Add another secret text. Provide variable name as 'secret_encryption_key'. Add C
 
 ![img.png](readme_images/img_7.png)
 
-Create a folder in the file system of the computer, ex: /Users/sgantayat/jenkin and copy the decrypt.js file and ganerate-ear.sh form this folder to the newly created folder.
+Create a folder in the file system of the computer, ex: /Users/sgantayat/jenkin and copy the decrypt.js file, replaceInDir.js and ganerate-ear.sh file form the current folder (same folder where this readme file is) to the newly created folder.
 
 Add a Build Step as 'Execute shell' under 'Build Steps' section and provide the below command to run the shell script copied in the previous step.
 
